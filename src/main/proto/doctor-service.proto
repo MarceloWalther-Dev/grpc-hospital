@@ -1,0 +1,45 @@
+syntax = "proto3";
+
+//Onde ele vai gerar a classe principal do grpc
+option java_package = "hospital";
+//vai separar as classes do grpc com a classe principal que é a .proto
+option java_multiple_files = true;
+
+package hospital;
+
+service DoctorService{
+
+  rpc Create(DoctorInput) returns (DoctorOutput);
+  rpc FindById(InputId) returns (DoctorOutput);
+  rpc Delete(InputId) returns (EmptyOutput);
+  rpc FindAll(EmptyInput) returns (DoctorOutputList);
+
+}
+
+message DoctorOutputList {
+  repeated DoctorOutput doctor = 1;
+}
+
+message EmptyInput {}
+message EmptyOutput{}
+
+message InputId {
+  string id = 1;
+}
+
+message DoctorInput {
+  string name = 1;
+  string last_name = 2;
+  int32 age = 3;
+  string sex = 4;
+  string specialty = 5;
+}
+
+message DoctorOutput {
+  string id = 1;
+  string name = 2;
+  string last_name = 3;
+  int32 age = 4;
+  string sex = 5;
+  string specialty = 6;
+}
