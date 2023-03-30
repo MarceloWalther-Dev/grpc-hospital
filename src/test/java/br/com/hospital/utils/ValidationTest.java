@@ -1,14 +1,12 @@
 package br.com.hospital.utils;
 
-import br.com.hospital.constantes.Constantes;
-import br.com.hospital.dto.DoctorRequest;
+import br.com.hospital.constantes.BaseTest;
 import br.com.hospital.exceptions.AttributeInValidException;
-import hospital.DoctorInput;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class ValidationTest extends Constantes {
+class ValidationTest extends BaseTest {
 
 
     public static final String O_NAME_NAO_PODE_ESTAR_NULO_OU_VAZIO = "O name não pode estar nulo ou vazio";
@@ -29,15 +27,4 @@ class ValidationTest extends Constantes {
                 .isThrownBy(() -> Validation.validateRequiredAttributes(doctorRequest))
                 .withMessage(O_NAME_NAO_PODE_ESTAR_NULO_OU_VAZIO);
     }
-
-    private DoctorRequest doctorRequestBuilder() {
-        return new DoctorRequest(DoctorInput.newBuilder()
-                .setName(NAME)
-                .setLastName(LAST_NAME)
-                .setAge(AGE)
-                .setSex(MASCULINO)
-                .setSpecialty(SPECIALTY)
-                .build());
-    }
-
 }

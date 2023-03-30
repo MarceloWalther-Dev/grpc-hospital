@@ -34,14 +34,15 @@ public class DoctorController extends DoctorServiceGrpc.DoctorServiceImplBase {
     @Override
     public void findById(InputId request, StreamObserver<DoctorOutput> responseObserver) {
         var response = service.findById(request.getId());
-        var doctorOutput = creatDoctorOutput(response);
-        responseObserver.onNext(doctorOutput);
+        responseObserver.onNext(creatDoctorOutput(response));
         responseObserver.onCompleted();
     }
 
     @Override
     public void delete(InputId request, StreamObserver<EmptyOutput> responseObserver) {
-        super.delete(request, responseObserver);
+       service.delete(request.getId());
+       responseObserver.onNext(EmptyOutput.newBuilder().build());
+       responseObserver.onCompleted();
     }
 
     @Override

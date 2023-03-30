@@ -6,7 +6,7 @@ import br.com.hospital.exceptions.AttributeInValidException;
 import br.com.hospital.exceptions.DoctorNotFoundException;
 import br.com.hospital.repository.DoctorRepository;
 import br.com.hospital.service.DoctorService;
-import br.com.hospital.utils.doctor.DoctorUtilsService;
+import br.com.hospital.utils.converters.DoctorUtilsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -26,11 +26,20 @@ public class DoctorServiceImpl implements DoctorService {
 
     @Override
     public DoctorResponse findById(String id) {
-        if (Objects.nonNull(id)) {
+        if (Objects.nonNull(id) && !id.isEmpty()) {
             var doctor = repository.findById(id).orElseThrow(() -> new DoctorNotFoundException(String.format("Não foi encontrado nenhum doctor com id %s", id)));
             return DoctorUtilsService.doctorConverterToDoctorResponse(doctor);
         }
         throw new AttributeInValidException("O id não pode estar nulo ou vazio");
+    }
 
+    @Override
+    public void delete(String id) {
+        if (Objects.nonNull(id) && !id.isEmpty()) {
+            var doctor = repository.findById(id).orElseThrow(() -> new DoctorNotFoundException("Não existe doutor com esse id"));
+            repository.delete(doctor);
+            return;
+        }
+        throw new AttributeInValidException("O id não pode estar nulo ou vazio");
     }
 }

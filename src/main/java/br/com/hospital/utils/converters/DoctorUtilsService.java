@@ -1,4 +1,4 @@
-package br.com.hospital.utils.doctor;
+package br.com.hospital.utils.converters;
 
 import br.com.hospital.domain.Doctor;
 import br.com.hospital.dto.DoctorRequest;
@@ -6,7 +6,10 @@ import br.com.hospital.dto.DoctorResponse;
 
 public class DoctorUtilsService {
 
-public static Doctor doctorRequestConverterToDoctor(DoctorRequest request){
+    private DoctorUtilsService() {
+    }
+
+    public static Doctor doctorRequestConverterToDoctor(DoctorRequest request){
     return new Doctor(request);
 }
 

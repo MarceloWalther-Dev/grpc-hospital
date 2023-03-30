@@ -9,4 +9,6 @@ public interface DoctorService {
 
     DoctorResponse findById(String id);
 
+    void delete(String id);
+
 }
