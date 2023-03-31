@@ -26,7 +26,6 @@ public class DoctorServiceImpl implements DoctorService {
     public DoctorOutput create(DoctorRequest request) {
         var doctor = DoctorUtilsService.doctorRequestConverterToDoctor(request);
         DoctorResponse doctorResponse = DoctorUtilsService.doctorConverterToDoctorResponse(repository.save(doctor));
-
         return creatDoctorOutput(doctorResponse);
     }
 

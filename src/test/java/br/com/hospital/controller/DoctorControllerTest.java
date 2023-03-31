@@ -4,6 +4,7 @@ import br.com.hospital.constantes.BaseTest;
 import hospital.DoctorInput;
 import hospital.DoctorOutput;
 import hospital.DoctorServiceGrpc;
+import hospital.EmptyInput;
 import hospital.InputId;
 import io.grpc.StatusRuntimeException;
 import net.devh.boot.grpc.client.inject.GrpcClient;
@@ -90,6 +91,14 @@ class DoctorControllerTest extends BaseTest {
         Assertions.assertThatExceptionOfType(StatusRuntimeException.class)
                 .isThrownBy(() -> serviceBlockingStub.delete(inputId))
                 .withMessage("INVALID_ARGUMENT: O id não pode estar nulo ou vazio");
+    }
+
+
+    @Test
+    @DisplayName("when requested, all doctors must return a list containing the same")
+    void findAllSucess(){
+        var emptyInput = EmptyInput.newBuilder().build();
+        Assertions.assertThatNoException().isThrownBy(() -> serviceBlockingStub.findAll(emptyInput));
     }
 
 

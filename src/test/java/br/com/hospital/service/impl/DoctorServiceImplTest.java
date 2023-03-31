@@ -18,6 +18,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -117,6 +118,18 @@ class DoctorServiceImplTest extends BaseTest {
         Assertions.assertThatExceptionOfType(DoctorNotFoundException.class)
                 .isThrownBy(() -> service.delete(id))
                 .withMessage("Não existe doutor com esse id");
+    }
+
+
+    @Test
+    @DisplayName("must return all doctors")
+    void findAllSucess() {
+        var doctor = DoctorUtilsService.doctorRequestConverterToDoctor(doctorRequestBuilder());
+        doctor.setId("1234567890");
+        List<Doctor> doctorList = List.of(doctor);
+        Mockito.when(repository.findAll()).thenReturn(doctorList);
+        service.findAll();
+        Mockito.verify(repository).findAll();
     }
 
 }
