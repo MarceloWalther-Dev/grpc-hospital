@@ -1,14 +1,17 @@
 package br.com.hospital.service;
 
 import br.com.hospital.dto.DoctorRequest;
-import br.com.hospital.dto.DoctorResponse;
+import hospital.DoctorOutput;
+
+import java.util.List;
 
 public interface DoctorService {
 
-    DoctorResponse create(DoctorRequest request);
+    DoctorOutput create(DoctorRequest request);
 
-    DoctorResponse findById(String id);
+    DoctorOutput findById(String id);
 
     void delete(String id);
 
+    List<DoctorOutput> findAll();
 }

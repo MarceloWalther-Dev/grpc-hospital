@@ -1,7 +1,6 @@
 package br.com.hospital.controller;
 
 import br.com.hospital.dto.DoctorRequest;
-import br.com.hospital.dto.DoctorResponse;
 import br.com.hospital.service.DoctorService;
 import br.com.hospital.utils.Validation;
 import hospital.DoctorInput;
@@ -27,37 +26,31 @@ public class DoctorController extends DoctorServiceGrpc.DoctorServiceImplBase {
         var doctorRequest = new DoctorRequest(request);
         Validation.validateRequiredAttributes(doctorRequest);
         var response = service.create(doctorRequest);
-        responseObserver.onNext(creatDoctorOutput(response));
+        responseObserver.onNext(response);
         responseObserver.onCompleted();
     }
 
     @Override
     public void findById(InputId request, StreamObserver<DoctorOutput> responseObserver) {
         var response = service.findById(request.getId());
-        responseObserver.onNext(creatDoctorOutput(response));
+        responseObserver.onNext(response);
         responseObserver.onCompleted();
     }
 
     @Override
     public void delete(InputId request, StreamObserver<EmptyOutput> responseObserver) {
-       service.delete(request.getId());
-       responseObserver.onNext(EmptyOutput.newBuilder().build());
-       responseObserver.onCompleted();
+        service.delete(request.getId());
+        responseObserver.onNext(EmptyOutput.newBuilder().build());
+        responseObserver.onCompleted();
     }
 
     @Override
     public void findAll(EmptyInput request, StreamObserver<DoctorOutputList> responseObserver) {
-        super.findAll(request, responseObserver);
+        var doctorList = service.findAll();
+        var doctorOutputList = DoctorOutputList.newBuilder().addAllDoctor(doctorList).build();
+        responseObserver.onNext(doctorOutputList);
+        responseObserver.onCompleted();
     }
 
-    private DoctorOutput creatDoctorOutput(DoctorResponse doctorResponse) {
-        return DoctorOutput.newBuilder()
-                .setId(doctorResponse.getId())
-                .setName(doctorResponse.getName())
-                .setLastName(doctorResponse.getLastName())
-                .setAge(doctorResponse.getAge())
-                .setSex(doctorResponse.getSex())
-                .setSpecialty(doctorResponse.getSpecialty())
-                .build();
-    }
+
 }
