@@ -1,12 +1,18 @@
 package br.com.hospital.domain;
 
 import br.com.hospital.dto.DoctorRequest;
-import lombok.Data;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Data
+@Getter
+@Setter
 @Document
+@AllArgsConstructor
+@NoArgsConstructor
 public class Doctor {
     @Id
     private String id;
